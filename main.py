@@ -8,6 +8,30 @@ pg.display.set_caption("Pygame Template")
 
 objects = pg.sprite.Group()
 
+class Object(pg.sprite.Sprite):
+  def __init__(self, size, color, pos, in_group = False):
+    super().__init__()
+    if in_group:
+      objects.add(self)
+
+    self.image = pg.Surface(size)
+    self.image.fill(color)
+
+    self.rect = self.image.get_rect()
+    self.rect.topleft = pos
+
+class Block():
+  def __init__(self, size, pos):
+    #0 - empty, 1 - snake, 1 - apple
+    self.states = {
+      0: Object(size, "grey", pos, True),
+      1: Object(size, "red", pos),
+      2: Object(size, "green", pos)
+    }
+
+    self.state = 0
+
+Block((50, 50), (0, 0))
 
 #Vars
 clock = pg.time.Clock()
