@@ -22,7 +22,7 @@ class Object(pg.sprite.Sprite):
 
 class Block():
   def __init__(self, size, pos):
-    #0 - empty, 1 - snake, 1 - apple
+    #0 - empty, 1 - apple, 2 - snake
     self.states = {
       0: Object(size, "grey", pos, True),
       1: Object(size, "red", pos),
@@ -31,7 +31,34 @@ class Block():
 
     self.state = 0
 
-Block((50, 50), (0, 0))
+  def switch_state(self, new_state):
+    objects.remove(self.states[self.state])
+    self.state = new_state
+    objects.add(self.states[self.state])
+
+class Grid():
+  def __init__(self, grid_width, grid_height):
+    self.width = grid_width
+    self.height = grid_height
+
+    self.matrix = []
+
+    for x in range(self.width):
+      column = []
+      for y in range(self.height):
+        rect_size = width/self.width, height/self.height
+        rect_pos = x * rect_size[0], y * rect_size[1]
+        column.append(Block(rect_size, rect_pos))
+
+      self.matrix.append(column)
+
+class Snake():
+  pass
+
+grid = Grid(25, 25)
+grid.matrix[10][10].switch_state(2)
+#block = Block((50, 50), (0, 0))
+#block.switch_state(2)
 
 #Vars
 clock = pg.time.Clock()
